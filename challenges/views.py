@@ -16,12 +16,16 @@ monthly_challenges = {
     "september": "eat no meat for the entire month",
     "october": "eat no meat for the entire month",
     "november": "eat no meat for the entire month",
-    "december": "eat no meat for the entire month",
+    "december": None,
 }
     
 def index(request):
-    list_items = ""
     months = list(monthly_challenges.keys())
+    return render(request, "challenges/index.html", {
+        "months": months
+    })
+    
+    
     
     for month in months:
         capitalized_month = month.capitalize()
@@ -42,7 +46,8 @@ def monthly_challenge(request, month):
     try:
         challenge_text = monthly_challenges[month]
         return render(request,'challenges/challenge.html', {
-            "text": challenge_text
+            "text": challenge_text,
+            "month_name": month
         })
     except:
         return HttpResponseNotFound("this month is not supported")
